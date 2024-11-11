@@ -22,12 +22,17 @@ export default class Customer_RepositoryInMemory
     customerName,
     customerEmail,
     customerPassword,
-  }: Customer_Entity): Promise<void> {
-    this.customerList.push({
+  }: Customer_Entity): Promise<Customer_Entity> {
+    const newCustomer: Customer_Entity = {
+      customerId: (this.customerList.length + 1).toString(),
       customerName,
       customerEmail,
       customerPassword,
-    });
+    };
+
+    this.customerList.push(newCustomer);
+
+    return newCustomer;
   }
 
   async find(): Promise<Customer_Entity[]> {
@@ -54,5 +59,31 @@ export default class Customer_RepositoryInMemory
       throw new Error("Customer with email notfound@example.com not found.");
     }
     return customerFound;
+  }
+
+  async delete(id: string): Promise<Customer_Entity> {
+    const customerDeleted = this.customerList.find(
+      (customer) => customer.customerId === id
+    );
+    if (!customerDeleted) {
+      throw new Error("Cliente não encontrado!");
+    }
+    return Promise.resolve(customerDeleted);
+  }
+
+  async update(
+    id: string,
+    updatedCustomer: Customer_Entity
+  ): Promise<Customer_Entity> {
+    const index = this.customerList.findIndex(
+      (customer) => customer.customerId === id
+    );
+
+    if (index === -1) {
+      throw new Error(`Customer with id ${id} not found.`);
+    }
+
+    this.customerList[index] = updatedCustomer;
+    return updatedCustomer;
   }
 }
