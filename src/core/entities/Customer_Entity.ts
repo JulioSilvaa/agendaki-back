@@ -1,5 +1,5 @@
 interface ICustomer_Entity {
-  customerId?: string;
+  customerId?: string | undefined;
   customerName: string;
   customerPassword: string;
   customerEmail: string;
