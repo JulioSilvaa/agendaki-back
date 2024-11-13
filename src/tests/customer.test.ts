@@ -111,12 +111,10 @@ describe("Teste unitário para Customer", () => {
     );
   });
 
-  // Teste para o caso de edição de um cliente
   test("Deveria editar os dados de um cliente", async () => {
     const createCustomer = new Create_Customer(customerRepositoryMemory);
     const newCustomer = await createCustomer.execute(user);
 
-    // Dados a serem atualizados
     const updatedData = {
       customerName: "Julio Silva",
       customerEmail: "julio.silva@teste.com",

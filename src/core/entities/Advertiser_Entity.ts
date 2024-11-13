@@ -11,7 +11,7 @@ interface IAdvertiser {
 }
 
 export default class Advertiser_Entity {
-  id: string | undefined;
+  id?: string | undefined;
   userId: string;
   name: string;
   img: string;

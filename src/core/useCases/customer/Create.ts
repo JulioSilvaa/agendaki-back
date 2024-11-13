@@ -1,9 +1,8 @@
 import Customer_Entity from "src/core/entities/Customer_Entity";
-import Customer_Repository from "src/core/repositories/Customer_Repository";
 import ICustomer_Repository from "src/core/repositories/Customer_Repository";
 
 export default class Create_Customer {
-  _customerRepository: Customer_Repository;
+  _customerRepository: ICustomer_Repository;
   constructor(customerRepository: ICustomer_Repository) {
     this._customerRepository = customerRepository;
   }
