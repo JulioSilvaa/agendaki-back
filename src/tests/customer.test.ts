@@ -3,7 +3,7 @@ import Find_CustomersList from "src/core/useCases/customer/Find";
 import Find_CustomerByEmail from "src/core/useCases/customer/FindByEmail";
 import Find_CustomerByID from "src/core/useCases/customer/FindById";
 import Delete_Customer from "src/core/useCases/customer/Delete";
-import Edite_Customer from "src/core/useCases/customer/Edite";
+import Edit_Customer from "src/core/useCases/customer/Edit";
 import Customer_RepositoryInMemory from "src/infra/repositoryInMemory/customer/Customer_Repository";
 import { beforeEach, describe, expect, test } from "vitest";
 
@@ -120,7 +120,7 @@ describe("Teste unitário para Customer", () => {
       customerEmail: "julio.silva@teste.com",
     };
 
-    const editeCustomer = new Edite_Customer(customerRepositoryMemory);
+    const editeCustomer = new Edit_Customer(customerRepositoryMemory);
     const updatedCustomer = await editeCustomer.execute(
       newCustomer.customerId,
       updatedData
@@ -134,7 +134,7 @@ describe("Teste unitário para Customer", () => {
   });
 
   test("Deveria lançar erro quando tentar editar um cliente inexistente", async () => {
-    const editeCustomer = new Edite_Customer(customerRepositoryMemory);
+    const editeCustomer = new Edit_Customer(customerRepositoryMemory);
 
     await expect(
       editeCustomer.execute("999", { customerName: "Novo Nome" })

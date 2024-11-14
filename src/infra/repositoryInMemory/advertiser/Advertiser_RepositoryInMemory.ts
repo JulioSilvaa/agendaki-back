@@ -1,3 +1,4 @@
+import { randomUUID } from "crypto";
 import Advertiser_Entity from "src/core/entities/Advertiser_Entity";
 import IAdvertiser_Repository from "src/core/repositories/Advertiser_Repository";
 
@@ -8,6 +9,7 @@ export default class Advertiser_RepositoryInMemory
 
   create(props: Advertiser_Entity): Promise<Advertiser_Entity> {
     const {
+      id = randomUUID(),
       name,
       phone,
       img,
@@ -19,7 +21,7 @@ export default class Advertiser_RepositoryInMemory
     } = props;
 
     const newAdvertiser: Advertiser_Entity = new Advertiser_Entity({
-      id: (this.advertiserList.length + 1).toString(),
+      id,
       name,
       phone,
       img,
@@ -39,7 +41,7 @@ export default class Advertiser_RepositoryInMemory
     return Promise.resolve(this.advertiserList);
   }
 
-  async findbyId(id: string): Promise<Advertiser_Entity> {
+  async findById(id: string): Promise<Advertiser_Entity> {
     const advertiserFound = this.advertiserList.find(
       (advertiser) => advertiser.id === id
     );
@@ -59,5 +61,20 @@ export default class Advertiser_RepositoryInMemory
       throw new Error("Anunciante não encontrado");
     }
     this.advertiserList.splice(index, 1);
+  }
+
+  async update(props: Advertiser_Entity): Promise<Advertiser_Entity> {
+    const advertiserFound = this.advertiserList.find(
+      (advertiser) => advertiser.id === props.id
+    );
+
+    if (!advertiserFound) {
+      throw new Error("Anunciante não encontrado");
+    }
+
+    Object.assign(advertiserFound, props);
+    console.log(advertiserFound);
+
+    return Promise.resolve(advertiserFound);
   }
 }

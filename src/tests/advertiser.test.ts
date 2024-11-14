@@ -1,5 +1,6 @@
 import Create_Advertiser from "src/core/useCases/advertiser/Create";
 import Delete_Advertiser from "src/core/useCases/advertiser/Delete";
+import Edite_Advertiser from "src/core/useCases/advertiser/Edit";
 import Advertiser_RepositoryInMemory from "src/infra/repositoryInMemory/advertiser/Advertiser_RepositoryInMemory";
 import { beforeEach, describe, expect, test } from "vitest";
 
@@ -18,11 +19,13 @@ describe("Teste unitário para Advertiser", () => {
   let advertiserRepositoryMemory: Advertiser_RepositoryInMemory;
   let createAdvertiser: Create_Advertiser;
   let deleteAdvertiser: Delete_Advertiser;
+  let editAdvertiser: Edite_Advertiser;
 
   beforeEach(() => {
     advertiserRepositoryMemory = new Advertiser_RepositoryInMemory();
     createAdvertiser = new Create_Advertiser(advertiserRepositoryMemory);
     deleteAdvertiser = new Delete_Advertiser(advertiserRepositoryMemory);
+    editAdvertiser = new Edite_Advertiser(advertiserRepositoryMemory);
   });
 
   test("Deveria criar um novo advertiser", async () => {
@@ -55,7 +58,7 @@ describe("Teste unitário para Advertiser", () => {
 
   test("Deveria lançar um erro se não encontrar um anunciante pelo ID", async () => {
     await expect(
-      advertiserRepositoryMemory.findbyId("999")
+      advertiserRepositoryMemory.findById("999")
     ).rejects.toThrowError("Anunciante não encontrado");
   });
 
@@ -70,7 +73,34 @@ describe("Teste unitário para Advertiser", () => {
     expect(advertisersAfterDelete.length).toBe(0);
 
     await expect(
-      advertiserRepositoryMemory.findbyId(newAdvertiser.id)
+      advertiserRepositoryMemory.findById(newAdvertiser.id)
     ).rejects.toThrowError("Anunciante não encontrado");
+  });
+
+  test("Deveria editar um anunciante quando o ID for válido", async () => {
+    const newAdvertiser = await createAdvertiser.execute(advertiserData);
+
+    const updatedData = { ...newAdvertiser, name: "Nike - Updated" };
+    const updatedAdvertiser = await editAdvertiser.execute(updatedData);
+
+    expect(updatedAdvertiser).toBeDefined();
+    expect(updatedAdvertiser.id).toBe(newAdvertiser.id);
+    expect(updatedAdvertiser.name).toBe("Nike - Updated");
+  });
+
+  test("Deveria lançar um erro se o anunciante não for encontrado pelo ID no edit", async () => {
+    const updatedData = { id: "999", name: "Nonexistent Advertiser" };
+
+    await expect(editAdvertiser.execute(updatedData)).rejects.toThrowError(
+      "Anunciante não encontrado"
+    );
+  });
+
+  test("Deveria realizar um update corretamente se o ID existir", async () => {
+    const newAdvertiser = await createAdvertiser.execute(advertiserData);
+    const updatedData = { ...newAdvertiser, name: "Nike - Updated" };
+    const updatedAdvertiser = await editAdvertiser.execute(updatedData);
+
+    expect(updatedAdvertiser.name).toBe("Nike - Updated");
   });
 });
