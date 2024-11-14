@@ -1,17 +1,17 @@
 export interface IServiceData_Entity {
-  id: number;
+  id?: string;
   name: string;
   description: string;
   album: string[];
-  addressId: number;
+  addressId: string;
 }
 
 export default class ServiceData_Entity {
-  id: number;
+  id?: string;
   name: string;
   description: string;
   album: string[];
-  addressId: number;
+  addressId: string;
 
   constructor(entity: IServiceData_Entity) {
     this.id = entity.id;

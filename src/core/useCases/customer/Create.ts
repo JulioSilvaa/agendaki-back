@@ -1,3 +1,4 @@
+import { randomUUID } from "crypto";
 import Customer_Entity from "src/core/entities/Customer_Entity";
 import ICustomer_Repository from "src/core/repositories/Customer_Repository";
 
@@ -8,6 +9,7 @@ export default class Create_Customer {
   }
 
   async execute({
+    customerId,
     customerName,
     customerEmail,
     customerPassword,
@@ -22,7 +24,8 @@ export default class Create_Customer {
       throw new Error("A senha deve ter pelo menos 6 caracteres");
     }
 
-    const newCustomer = await this._customerRepository.create({
+    const newCustomer = await this._customerRepository.save({
+      customerId: randomUUID(),
       customerEmail,
       customerName,
       customerPassword,

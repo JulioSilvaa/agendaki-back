@@ -5,15 +5,17 @@ interface IAddress_Entity {
   zipcode: string;
   neighborhood: string;
   state: string;
+  complemente?: string;
 }
 
 export default class Address_Entity {
-  id?: string | undefined;
+  id?: string;
   city: string;
   street: string;
   zipcode: string;
   neighborhood: string;
   state: string;
+  complemente?: string;
 
   constructor(entity: IAddress_Entity) {
     this.id = entity.id;
@@ -22,5 +24,6 @@ export default class Address_Entity {
     this.zipcode = entity.zipcode;
     this.neighborhood = entity.neighborhood;
     this.state = entity.state;
+    this.complemente = entity.complemente;
   }
 }

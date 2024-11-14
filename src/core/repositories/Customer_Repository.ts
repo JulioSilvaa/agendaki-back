@@ -1,7 +1,7 @@
 import Customer_Entity from "../entities/Customer_Entity";
 
 export default interface ICustomer_Repository {
-  create({
+  save({
     customerName,
     customerEmail,
     customerPassword,

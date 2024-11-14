@@ -130,7 +130,6 @@ describe("Teste unitário para Customer", () => {
     expect(updatedCustomer.customerName).toBe(updatedData.customerName);
     expect(updatedCustomer.customerEmail).toBe(updatedData.customerEmail);
     expect(updatedCustomer.customerPassword).toBe(newCustomer.customerPassword);
-    console.log(updatedCustomer);
   });
 
   test("Deveria lançar erro quando tentar editar um cliente inexistente", async () => {

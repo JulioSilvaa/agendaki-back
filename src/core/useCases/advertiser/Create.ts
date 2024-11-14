@@ -9,7 +9,7 @@ export default class Create_Advertiser {
   }
 
   async execute(props: Advertiser_Entity): Promise<Advertiser_Entity> {
-    const advertiser = await this.advertiserRepository.create(props);
+    const advertiser = await this.advertiserRepository.save(props);
     return advertiser;
   }
 }

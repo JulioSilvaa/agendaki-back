@@ -62,7 +62,7 @@ describe("Teste unitário para Advertiser", () => {
     ).rejects.toThrowError("Anunciante não encontrado");
   });
 
-  test("Deveria deletar um anunciante", async () => {
+  test("Deveria apagar um anunciante", async () => {
     const newAdvertiser = await createAdvertiser.execute(advertiserData);
     expect(newAdvertiser).toBeDefined();
     expect(newAdvertiser.name).toBe(advertiserData.name);
@@ -80,10 +80,11 @@ describe("Teste unitário para Advertiser", () => {
   test("Deveria editar um anunciante quando o ID for válido", async () => {
     const newAdvertiser = await createAdvertiser.execute(advertiserData);
 
+    expect(newAdvertiser.id).toBeDefined();
+
     const updatedData = { ...newAdvertiser, name: "Nike - Updated" };
     const updatedAdvertiser = await editAdvertiser.execute(updatedData);
 
-    expect(updatedAdvertiser).toBeDefined();
     expect(updatedAdvertiser.id).toBe(newAdvertiser.id);
     expect(updatedAdvertiser.name).toBe("Nike - Updated");
   });

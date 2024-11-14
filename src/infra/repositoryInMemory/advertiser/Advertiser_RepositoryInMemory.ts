@@ -7,7 +7,7 @@ export default class Advertiser_RepositoryInMemory
 {
   advertiserList: Advertiser_Entity[] = [];
 
-  create(props: Advertiser_Entity): Promise<Advertiser_Entity> {
+  save(props: Advertiser_Entity): Promise<Advertiser_Entity> {
     const {
       id = randomUUID(),
       name,
@@ -32,7 +32,6 @@ export default class Advertiser_RepositoryInMemory
       listingDate,
     });
 
-    console.log(newAdvertiser);
     this.advertiserList.push(newAdvertiser);
     return Promise.resolve(newAdvertiser);
   }
@@ -60,7 +59,7 @@ export default class Advertiser_RepositoryInMemory
     if (index === -1) {
       throw new Error("Anunciante não encontrado");
     }
-    this.advertiserList.splice(index, 1);
+    Promise.resolve(this.advertiserList.splice(index, 1));
   }
 
   async update(props: Advertiser_Entity): Promise<Advertiser_Entity> {
@@ -73,8 +72,6 @@ export default class Advertiser_RepositoryInMemory
     }
 
     Object.assign(advertiserFound, props);
-    console.log(advertiserFound);
-
     return Promise.resolve(advertiserFound);
   }
 }

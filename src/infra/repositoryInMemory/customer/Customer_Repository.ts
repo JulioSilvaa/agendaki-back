@@ -4,27 +4,16 @@ import ICustomer_Repository from "src/core/repositories/Customer_Repository";
 export default class Customer_RepositoryInMemory
   implements ICustomer_Repository
 {
-  customerList: Customer_Entity[] = [
-    {
-      customerName: "julio",
-      customerEmail: "julio@teste.com",
-      customerPassword: "23234234",
-    },
-    {
-      customerId: "2",
-      customerName: "joão",
-      customerEmail: "joão@teste.com",
-      customerPassword: "23234234",
-    },
-  ];
+  customerList: Customer_Entity[] = [];
 
-  async create({
+  async save({
+    customerId,
     customerName,
     customerEmail,
     customerPassword,
   }: Customer_Entity): Promise<Customer_Entity> {
     const newCustomer: Customer_Entity = {
-      customerId: (this.customerList.length + 1).toString(),
+      customerId,
       customerName,
       customerEmail,
       customerPassword,
