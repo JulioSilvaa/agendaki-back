@@ -1,15 +1,15 @@
-interface IService {
+interface IServices {
   id?: string;
   serviceDataId: string;
   advertiserId: string;
 }
 
-export default class Service_Entity {
-  id: string | undefined;
+export default class Services_Entity {
+  id?: string | undefined;
   serviceDataId: string;
   advertiserId: string;
 
-  constructor(entity: IService) {
+  constructor(entity: IServices) {
     this.id = entity.id;
     this.serviceDataId = entity.serviceDataId;
     this.advertiserId = entity.advertiserId;
